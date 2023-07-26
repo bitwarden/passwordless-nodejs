@@ -1,7 +1,7 @@
 {
-  "name": "@passwordlessdev/passwordless-nodejs-sdk",
+  "name": "@passwordlessdev/passwordless-nodejs",
   "version": "0.1.0",
-  "description": "Passwordless Node.js SDK",
+  "description": "Passwordless Node.js",
   "types": "./types",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
