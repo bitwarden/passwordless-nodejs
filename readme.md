@@ -40,3 +40,54 @@ const client: IPasswordlessClient = PasswordlessClient.create(options);
 const options: PasswordlessOptions = PasswordlessOptions.createHosted('https://v4.passwordless.dev', 'demo:secret:f831e39c29e64b77aba547478a4b3ec6');
 const client: IPasswordlessClient = PasswordlessClient.create(options);
 ```
+
+## Registration
+If you had for example a 'UserController.ts' with a 'signup' arrow function. You could register a new token as shown below.
+
+You'll first want to proceed to store the new user in your database and verifying it has succeeded, before registering the token.
+
+```TSX
+signup = async (request: express.Request, response: express.Response) => {
+        const signupRequest: SignupRequest = request.body;
+        const repository: UserRepository = new UserRepository();
+        let id: string = null;
+        try {
+            id = repository.create(signupRequest.username, signupRequest.firstName, signupRequest.lastName);
+        } catch {
+            repository.close();
+        }
+
+        const passwordlessOptions: PasswordlessOptions = PasswordlessOptions.createWithDotEnv();
+        const passwordlessClient: PasswordlessClient = PasswordlessClient.create(passwordlessOptions);
+        let registerOptions = new RegisterOptions();
+        registerOptions.userId = id;
+        registerOptions.username = signupRequest.username;
+        if (signupRequest.deviceName) {
+            registerOptions.aliases = new Array(1);
+            registerOptions.aliases[0] = signupRequest.alias;
+        }
+        registerOptions.discoverable = true;
+        const token: RegisterTokenResponse = await passwordlessClient.createRegisterToken(registerOptions);
+        response.send(token);
+    }
+```
+
+## Logging in
+
+```TSX
+signin = async (request: express.Request, response: express.Response) => {
+        try {
+            const token: string = request.query.token as string;
+            const verifiedUser: VerifiedUser = await this._passwordlessClient.verifyToken(token);
+
+            if (verifiedUser && verifiedUser.success === true) {
+                // If you want to build a JWT token for your application that are rendered client-side, you can do this here.
+                response.send(JSON.stringify(verifiedUser));
+                return;
+            }
+        } catch {
+            // error handling
+        }
+        response.send(401);
+    }
+```
