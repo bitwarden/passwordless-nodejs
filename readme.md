@@ -7,10 +7,10 @@ This library is meant for helping you integrate 'Passwordless.dev' with your Nod
 ## .env
 When using .env to configure your web application you'll need to set the following properties:
 
-| Key                   | Value example                                | Description                                                  | Optional |
-|-----------------------|----------------------------------------------|--------------------------------------------------------------|----------|
-| `PASSWORDLESS_API`    | https://v4.passwordless.dev                  | The base url where your Passwordless.dev back-end is running | Yes      |
-| `PASSWORDLESS_SECRET` | demo:secret:f831e39c29e64b77aba547478a4b3ec6 | This is your secret obtained from the AdminConsole.          | No       |
+| Key                   | Value example                                  | Description                                                  | Optional |
+|-----------------------|------------------------------------------------|--------------------------------------------------------------|----------|
+| `PASSWORDLESS_API`    | `https://v4.passwordless.dev`                  | The base url where your Passwordless.dev back-end is running | Yes      |
+| `PASSWORDLESS_SECRET` | `demo:secret:f831e39c29e64b77aba547478a4b3ec6` | This is your secret obtained from the AdminConsole.          | No       |
 
 You would then use the PasswordlessClient as:
 
