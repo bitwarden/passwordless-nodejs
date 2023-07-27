@@ -1,13 +1,10 @@
-import PasswordlessOptions from "./PasswordlessOptions";
-import IPasswordlessClient from "./IPasswordlessClient";
+'use strict';
+
 import PasswordlessClient from "./PasswordlessClient";
+import PasswordlessOptions from "./PasswordlessOptions";
 
-import ApiException from "./exceptions/ApiException";
+const initialiser = function(secret: string, options: PasswordlessOptions = {}) {
+    return new PasswordlessClient(secret, options);
+};
 
-export {
-    IPasswordlessClient,
-    PasswordlessClient,
-    PasswordlessOptions,
-
-    ApiException
-}
+module.exports = initialiser;

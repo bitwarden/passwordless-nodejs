@@ -15,30 +15,18 @@ When using .env to configure your web application you'll need to set the followi
 You would then use the PasswordlessClient as:
 
 # Using
-## Dotenv
-In your `.env` file you can write your configuration as follows. Note that `PASSWORDLESS_API` is optional and will default to `https://v4.passwordless.dev`.
-```
-PASSWORDLESS_API=https://v4.passwordless.dev
-PASSWORDLESS_SECRET=demo:secret:f831e39c29e64b77aba547478a4b3ec6
+Specifying the `baseUrl` would be optional, and will contain `https://v4.passwordless.dev` as its default value.
+
+```TSX
+const options: PasswordlessOptions = {
+  baseUrl: 'https://v4.passwordless.dev'
+};
+this._passwordlessClient = new PasswordlessClient('demo:secret:f831e39c29e64b77aba547478a4b3ec6', options);
 ```
 
 ```TSX
-const options: PasswordlessOptions = PasswordlessOptions.createWithDotEnv();
-const client: IPasswordlessClient = PasswordlessClient.create(options);
-```
-
-## Manually
-
-If you want to specify the parameters manually or from a different source.
-
-```TSX
-const options: PasswordlessOptions = PasswordlessOptions.createCloud('demo:secret:f831e39c29e64b77aba547478a4b3ec6');
-const client: IPasswordlessClient = PasswordlessClient.create(options);
-```
-
-```TSX
-const options: PasswordlessOptions = PasswordlessOptions.createHosted('https://v4.passwordless.dev', 'demo:secret:f831e39c29e64b77aba547478a4b3ec6');
-const client: IPasswordlessClient = PasswordlessClient.create(options);
+const options: PasswordlessOptions = {};
+this._passwordlessClient = new PasswordlessClient('demo:secret:f831e39c29e64b77aba547478a4b3ec6', options);
 ```
 
 ## Registration
@@ -54,20 +42,27 @@ signup = async (request: express.Request, response: express.Response) => {
         try {
             id = repository.create(signupRequest.username, signupRequest.firstName, signupRequest.lastName);
         } catch {
+            // do error handling, creating user failed.
+        } finally {
             repository.close();
         }
 
-        const passwordlessOptions: PasswordlessOptions = PasswordlessOptions.createWithDotEnv();
-        const passwordlessClient: PasswordlessClient = PasswordlessClient.create(passwordlessOptions);
+        if (!id) {
+            // Do not proceed to create a token, we failed to create a user.
+            response.send(400);
+        }
+
         let registerOptions = new RegisterOptions();
         registerOptions.userId = id;
         registerOptions.username = signupRequest.username;
         if (signupRequest.deviceName) {
             registerOptions.aliases = new Array(1);
-            registerOptions.aliases[0] = signupRequest.alias;
+            registerOptions.aliases[0] = signupRequest.deviceName;
         }
+        
         registerOptions.discoverable = true;
-        const token: RegisterTokenResponse = await passwordlessClient.createRegisterToken(registerOptions);
+        
+        const token: RegisterTokenResponse = await this._passwordlessClient.createRegisterToken(registerOptions);
         response.send(token);
     }
 ```
@@ -81,12 +76,12 @@ signin = async (request: express.Request, response: express.Response) => {
             const verifiedUser: VerifiedUser = await this._passwordlessClient.verifyToken(token);
 
             if (verifiedUser && verifiedUser.success === true) {
-                // If you want to build a JWT token for your application that are rendered client-side, you can do this here.
+                // If you want to build a JWT token for SPA that are rendered client-side, you can do this here.
                 response.send(JSON.stringify(verifiedUser));
                 return;
             }
-        } catch {
-            // error handling
+        } catch (error) {
+            console.error(error.message);
         }
         response.send(401);
     }

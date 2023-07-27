@@ -5,7 +5,7 @@ import AliasPointer from "./models/AliasPointer";
 import Credential from "./models/Credential";
 import VerifiedUser from "./models/VerifiedUser";
 import ProblemDetails from "./models/ProblemDetails";
-import axios, {AxiosError, InternalAxiosRequestConfig, AxiosRequestConfig, isAxiosError, AxiosResponse, AxiosInstance} from "axios";
+import axios, {AxiosError, isAxiosError, AxiosResponse, AxiosInstance} from "axios";
 import ApiException from "./exceptions/ApiException";
 import VerifyTokenRequest from "./models/VerifyTokenRequest";
 import DeleteUserRequest from "./models/DeleteUserRequest";
@@ -17,11 +17,11 @@ import UsersCount from "./models/UsersCount";
 export default class PasswordlessClient implements IPasswordlessClient {
     private readonly _httpClient!: AxiosInstance;
 
-    private constructor(options: PasswordlessOptions) {
+    constructor(secret: string, options: PasswordlessOptions) {
         this._httpClient = axios.create({
-            baseURL: options.baseUrl,
+            baseURL: options?.baseUrl || "https://v4.passwordless.dev",
             headers: {
-                'ApiSecret': options.secret
+                'ApiSecret': secret
             }
         });
         this._httpClient.interceptors.response.use(
@@ -34,13 +34,6 @@ export default class PasswordlessClient implements IPasswordlessClient {
             }
         );
 
-    }
-
-    public static create(options: PasswordlessOptions): PasswordlessClient {
-        if (!options) {
-            throw new Error("'options' cannot be null.");
-        }
-        return new PasswordlessClient(options);
     }
 
     createRegisterToken = async (registerOptions: RegisterOptions): Promise<RegisterTokenResponse> => {

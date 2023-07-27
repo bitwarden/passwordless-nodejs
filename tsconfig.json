@@ -1,19 +1,31 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "ES6",
-    "strict": true,
+    "target": "ES2018",
+    "module": "CommonJS",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./lib/esm",
+    "outDir": "lib",
     "moduleResolution": "Node",
-    "declaration": true
+    "declaration": true,
+    "newLine": "lf",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "pretty": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "skipLibCheck": true,
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
+    }
   },
   "include": [
-    "./src"
+    "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "lib"
+    "**/*.test.ts"
   ]
 }
