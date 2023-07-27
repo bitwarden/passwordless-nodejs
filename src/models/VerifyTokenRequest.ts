@@ -1,10 +1,13 @@
 export default class VerifyTokenRequest {
-    constructor(token: string) {
-        this.token = token;
-    }
+  constructor(token: string) {
+    this.token = token;
+  }
 
-    token: string;
-    rpid?: string;
-    serverName?: string;
-    origin?: string;
+  token: string;
+
+  rpid?: string;
+
+  serverName?: string;
+
+  origin?: string;
 }

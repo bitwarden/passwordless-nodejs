@@ -1,21 +1,31 @@
 import Converters from "../Converters";
 
 export default class VerifiedUser {
-    userId!: string;
-    credentialId!: string;
+  userId!: string;
 
-    public getCredentialId(): Uint8Array {
-        return Converters.base64UrlToUint8Array(this.credentialId);
-    }
+  credentialId!: string;
 
-    success: boolean = false;
-    timestamp?: Date;
-    rpid?: string;
-    origin?: string;
-    device?: string;
-    country?: string;
-    nickname?: string;
-    expiresAt?: Date;
-    tokenId?: string;
-    type?: string;
+  public getCredentialId(): Uint8Array {
+    return Converters.base64UrlToUint8Array(this.credentialId);
+  }
+
+  success: boolean = false;
+
+  timestamp?: Date;
+
+  rpid?: string;
+
+  origin?: string;
+
+  device?: string;
+
+  country?: string;
+
+  nickname?: string;
+
+  expiresAt?: Date;
+
+  tokenId?: string;
+
+  type?: string;
 }

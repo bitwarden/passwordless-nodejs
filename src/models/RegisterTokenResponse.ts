@@ -1,3 +1,3 @@
 export default class RegisterTokenResponse {
-    token!: string;
+  token!: string;
 }
