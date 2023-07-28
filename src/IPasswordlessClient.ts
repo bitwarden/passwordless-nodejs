@@ -2,7 +2,6 @@ import AliasPointer from "./models/AliasPointer";
 import Credential from "./models/Credential";
 import VerifiedUser from "./models/VerifiedUser";
 import RegisterTokenResponse from "./models/RegisterTokenResponse";
-import UsersCount from "./models/UsersCount";
 import RegisterOptions from "./models/RegisterOptions";
 
 export default interface IPasswordlessClient {
@@ -17,5 +16,4 @@ export default interface IPasswordlessClient {
   verifyToken(verifyToken: string): Promise<VerifiedUser | null>;
 
   deleteUser(userId: string): Promise<void>;
-  getUsersCount(): Promise<UsersCount>;
 }

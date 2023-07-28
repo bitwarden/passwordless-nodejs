@@ -12,7 +12,6 @@ import DeleteUserRequest from "./models/DeleteUserRequest";
 import ListResponse from "./models/ListResponse";
 import PasswordlessOptions from "./PasswordlessOptions";
 import DeleteCredentialRequest from "./models/DeleteCredentialRequest";
-import UsersCount from "./models/UsersCount";
 
 export default class PasswordlessClient implements IPasswordlessClient {
   private readonly _httpClient!: AxiosInstance;
@@ -86,10 +85,5 @@ export default class PasswordlessClient implements IPasswordlessClient {
       .post("signin/verify", request)
       .then((response: AxiosResponse<VerifiedUser>) => response.data)
       .catch(() => null);
-  };
-
-  getUsersCount = (): Promise<UsersCount> =>
-    this._httpClient
-      .get("users/count")
-      .then((response: AxiosResponse<UsersCount>) => response.data);
+  };  
 }
