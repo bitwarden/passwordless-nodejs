@@ -1,11 +1,13 @@
 export default class ProblemDetails {
-  type: string = "";
+  type?: string;
 
-  title: string = "";
+  title?: string;
 
-  status: number = 0;
+  status?: number;
 
-  detail?: string;
+  errorCode?: string;
 
   instance?: string;
+
+  detail?: string;
 }

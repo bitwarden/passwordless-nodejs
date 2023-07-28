@@ -1,4 +1,4 @@
-import axios, { isAxiosError, AxiosResponse, AxiosInstance } from "axios";
+import axios, { AxiosResponse, AxiosInstance, AxiosError } from "axios";
 import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import IPasswordlessClient from "./IPasswordlessClient";
 import RegisterOptions from "./models/RegisterOptions";
@@ -26,14 +26,20 @@ export default class PasswordlessClient implements IPasswordlessClient {
     });
     this._httpClient.interceptors.response.use(
       (onFulfilled) => onFulfilled,
-      (onRejected) => {
+      (onRejected: AxiosError<ProblemDetails>) => {
         if (
           onRejected.response.headers["content-type"] ===
           "application/problem+json"
         ) {
           throw new ApiException(onRejected.response.data);
+        } else {
+          const problemDetails: ProblemDetails = new ProblemDetails();
+          problemDetails.status = onRejected.status;
+          problemDetails.errorCode = "unexpected_error";
+          problemDetails.title = onRejected.message;
+          problemDetails.type = "https://docs.passwordless.dev/errors";
+          throw new ApiException(problemDetails);
         }
-        return onRejected;
       },
     );
   }
@@ -43,13 +49,7 @@ export default class PasswordlessClient implements IPasswordlessClient {
   ): Promise<RegisterTokenResponse> =>
     this._httpClient
       .post("register/token", registerOptions)
-      .then((response) => response.data)
-      .catch((error) => {
-        if (isAxiosError(error) && error.response) {
-          const details = error.response?.data as ProblemDetails;
-          throw new ApiException(details);
-        }
-      });
+      .then((response) => response.data);
 
   deleteCredential = (credentialId: Uint8Array): Promise<void> => {
     if (!credentialId) {
