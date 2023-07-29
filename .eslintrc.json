@@ -27,6 +27,7 @@
     "@typescript-eslint/no-explicit-any": "error",
     "no-underscore-dangle": "off",
     "no-plusplus": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "no-shadow": "off"
   },
   "ignorePatterns": ["src/index.ts"]}

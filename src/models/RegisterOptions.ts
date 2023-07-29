@@ -1,3 +1,6 @@
+import Attestation from "./enums/Attestation";
+import UserVerification from "./enums/UserVerification";
+
 export default class RegisterOptions {
   public RegisterOptions(userId: string) {
     this.userId = userId;
@@ -9,13 +12,13 @@ export default class RegisterOptions {
 
   username?: string;
 
-  attestation: string = "None";
+  attestation: Attestation = Attestation.NONE;
 
   authenticatorType?: string;
 
   discoverable: boolean = true;
 
-  userVerification: string = "Preferred";
+  userVerification: UserVerification = UserVerification.PREFERRED;
 
   aliases?: string[];
 
