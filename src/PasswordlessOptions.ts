@@ -1,3 +1,5 @@
-export default interface PasswordlessOptions {
+export interface PasswordlessOptions {
   baseUrl?: string;
 }
+
+export default PasswordlessOptions;

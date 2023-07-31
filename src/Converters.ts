@@ -1,4 +1,4 @@
-export default class Converters {
+export class Converters {
   public static uint8ArrayToBase64Url(input: Uint8Array): string {
     const base64String = btoa(String.fromCharCode(...input));
     return base64String
@@ -23,3 +23,5 @@ export default class Converters {
     return uint8Array;
   }
 }
+
+export default Converters;

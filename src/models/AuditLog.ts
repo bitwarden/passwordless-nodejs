@@ -1,4 +1,4 @@
-export default class AuditLog {
+export class AuditLog {
   public timestamp?: Date;
 
   public level?: string;
@@ -7,3 +7,5 @@ export default class AuditLog {
 
   public details?: string;
 }
+
+export default AuditLog;

@@ -1,19 +1,19 @@
 import axios, { AxiosResponse, AxiosInstance, AxiosError } from "axios";
-import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import IPasswordlessClient from "./IPasswordlessClient";
-import RegisterOptions from "./models/RegisterOptions";
-import AliasPointer from "./models/AliasPointer";
-import Credential from "./models/Credential";
-import VerifiedUser from "./models/VerifiedUser";
+import PasswordlessOptions from "./PasswordlessOptions";
 import ProblemDetails from "./models/ProblemDetails";
 import ApiException from "./exceptions/ApiException";
-import VerifyTokenRequest from "./models/VerifyTokenRequest";
-import DeleteUserRequest from "./models/DeleteUserRequest";
-import ListResponse from "./models/ListResponse";
-import PasswordlessOptions from "./PasswordlessOptions";
+import RegisterOptions from "./models/RegisterOptions";
+import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import DeleteCredentialRequest from "./models/DeleteCredentialRequest";
+import DeleteUserRequest from "./models/DeleteUserRequest";
+import AliasPointer from "./models/AliasPointer";
+import ListResponse from "./models/ListResponse";
+import Credential from "./models/Credential";
+import VerifiedUser from "./models/VerifiedUser";
+import VerifyTokenRequest from "./models/VerifyTokenRequest";
 
-export default class PasswordlessClient implements IPasswordlessClient {
+export class PasswordlessClient implements IPasswordlessClient {
   private readonly _httpClient!: AxiosInstance;
 
   constructor(secret: string, options: PasswordlessOptions) {
@@ -27,7 +27,7 @@ export default class PasswordlessClient implements IPasswordlessClient {
       (onFulfilled) => onFulfilled,
       (onRejected: AxiosError<ProblemDetails>) => {
         if (
-          onRejected.response.headers["content-type"] ===
+          onRejected.response?.headers["content-type"] ===
           "application/problem+json"
         ) {
           throw new ApiException(onRejected.response.data);
@@ -85,5 +85,7 @@ export default class PasswordlessClient implements IPasswordlessClient {
       .post("signin/verify", request)
       .then((response: AxiosResponse<VerifiedUser>) => response.data)
       .catch(() => null);
-  };  
+  };
 }
+
+export default PasswordlessClient;

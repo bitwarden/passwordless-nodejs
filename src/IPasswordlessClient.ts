@@ -1,10 +1,10 @@
 import AliasPointer from "./models/AliasPointer";
 import Credential from "./models/Credential";
-import VerifiedUser from "./models/VerifiedUser";
-import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import RegisterOptions from "./models/RegisterOptions";
+import RegisterTokenResponse from "./models/RegisterTokenResponse";
+import VerifiedUser from "./models/VerifiedUser";
 
-export default interface IPasswordlessClient {
+export interface IPasswordlessClient {
   listAliases(userId: string): Promise<AliasPointer[]>;
 
   deleteCredential(id: Uint8Array): Promise<void>;
@@ -17,3 +17,5 @@ export default interface IPasswordlessClient {
 
   deleteUser(userId: string): Promise<void>;
 }
+
+export default IPasswordlessClient;

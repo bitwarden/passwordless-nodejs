@@ -1,4 +1,4 @@
-enum Attestation {
+export enum Attestation {
   /**
    * A value of "none" indicates that the server does not care about attestation.
    */

@@ -1,4 +1,4 @@
-enum UserVerification {
+export enum UserVerification {
   /**
    * The Relying Party does not want user verification employed during the operation (e.g., in the interest of minimizing disruption to the user interaction flow).
    */

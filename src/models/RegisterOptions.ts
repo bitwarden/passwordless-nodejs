@@ -1,7 +1,7 @@
 import Attestation from "./enums/Attestation";
 import UserVerification from "./enums/UserVerification";
 
-export default class RegisterOptions {
+export class RegisterOptions {
   public RegisterOptions(userId: string) {
     this.userId = userId;
   }
@@ -26,3 +26,5 @@ export default class RegisterOptions {
 
   expiresAt?: Date;
 }
+
+export default RegisterOptions;
