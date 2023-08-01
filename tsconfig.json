@@ -1,31 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "outDir": "lib",
-    "moduleResolution": "Node",
-    "declaration": true,
-    "newLine": "lf",
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "pretty": true,
+    "moduleResolution": "node",
+    "removeComments": false,
     "sourceMap": true,
-    "baseUrl": ".",
-    "noImplicitAny": false,
-    "noImplicitReturns": false,
-    "skipLibCheck": true,
-    "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
-    }
+    "target": "ES2018",
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "module": "esnext",
+    "noEmitOnError": true,
+    "lib": ["ES2017"],
+    "esModuleInterop": false,
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/*.test.ts"
-  ]
+  "include": ["src"]
 }

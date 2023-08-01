@@ -1,6 +1,6 @@
 import ProblemDetails from "../models/ProblemDetails";
 
-export default class ApiException extends Error {
+export class ApiException extends Error {
   private _details: ProblemDetails;
 
   constructor(details: ProblemDetails) {
@@ -12,3 +12,5 @@ export default class ApiException extends Error {
     return this.details;
   }
 }
+
+export default ApiException;

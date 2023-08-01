@@ -1,11 +1,20 @@
-import PasswordlessClient from "./PasswordlessClient";
-import PasswordlessOptions from "./PasswordlessOptions";
+export { ProblemDetails } from "./models/ProblemDetails";
+export { ApiException } from './exceptions/ApiException';
+export { Converters } from './Converters';
 
-const initialiser = function (
-  secret: string,
-  options: PasswordlessOptions = {},
-) {
-  return new PasswordlessClient(secret, options);
-};
-
-module.exports = initialiser;
+export { Attestation } from "./models/enums/Attestation";
+export { UserVerification } from "./models/enums/UserVerification";
+export { AliasPointer } from "./models/AliasPointer";
+export { AuditLog } from "./models/AuditLog";
+export { CredentialDescriptor } from "./models/CredentialDescriptor";
+export { Credential } from "./models/Credential";
+export { DeleteCredentialRequest } from "./models/DeleteCredentialRequest";
+export { DeleteUserRequest } from "./models/DeleteUserRequest";
+export { ListResponse } from "./models/ListResponse";
+export { RegisterOptions } from "./models/RegisterOptions";
+export { RegisterTokenResponse } from "./models/RegisterTokenResponse";
+export { VerifiedUser } from "./models/VerifiedUser";
+export { VerifyTokenRequest } from "./models/VerifyTokenRequest";
+export { IPasswordlessClient } from "./IPasswordlessClient";
+export { PasswordlessClient } from "./PasswordlessClient";
+export { PasswordlessOptions } from "./PasswordlessOptions";

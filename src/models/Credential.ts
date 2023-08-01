@@ -1,7 +1,7 @@
-import CredentialDescriptor from "./CredentialDescriptor";
 import Converters from "../Converters";
+import CredentialDescriptor from "./CredentialDescriptor";
 
-export default class Credential {
+export class Credential {
   public descriptor!: CredentialDescriptor;
 
   public publicKey!: string;
@@ -38,3 +38,5 @@ export default class Credential {
 
   public userId?: string;
 }
+
+export default Credential;

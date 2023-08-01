@@ -1,4 +1,4 @@
-export default class VerifyTokenRequest {
+export class VerifyTokenRequest {
   constructor(token: string) {
     this.token = token;
   }
@@ -11,3 +11,5 @@ export default class VerifyTokenRequest {
 
   origin?: string;
 }
+
+export default VerifyTokenRequest;

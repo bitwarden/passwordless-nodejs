@@ -1,4 +1,4 @@
-export default class ProblemDetails {
+export class ProblemDetails {
   type?: string;
 
   title?: string;
@@ -11,3 +11,5 @@ export default class ProblemDetails {
 
   detail?: string;
 }
+
+export default ProblemDetails;

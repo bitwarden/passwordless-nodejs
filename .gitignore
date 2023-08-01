@@ -132,4 +132,5 @@ dist
 package-lock.json
 .DS_Store
 .idea/
-/lib/
+/dist/
+/package/

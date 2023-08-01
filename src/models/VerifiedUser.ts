@@ -1,6 +1,6 @@
 import Converters from "../Converters";
 
-export default class VerifiedUser {
+export class VerifiedUser {
   userId!: string;
 
   credentialId!: string;
@@ -29,3 +29,5 @@ export default class VerifiedUser {
 
   type?: string;
 }
+
+export default VerifiedUser;
