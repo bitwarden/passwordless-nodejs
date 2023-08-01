@@ -4,6 +4,7 @@ export { Converters } from './Converters';
 
 export { Attestation } from "./models/enums/Attestation";
 export { UserVerification } from "./models/enums/UserVerification";
+export { AuthenticatorAttachment } from "./models/enums/AuthenticatorAttachment";
 export { AliasPointer } from "./models/AliasPointer";
 export { AuditLog } from "./models/AuditLog";
 export { CredentialDescriptor } from "./models/CredentialDescriptor";

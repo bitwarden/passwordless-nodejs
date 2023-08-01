@@ -1,5 +1,6 @@
 import Attestation from "./enums/Attestation";
 import UserVerification from "./enums/UserVerification";
+import AuthenticatorAttachment from "./enums/AuthenticatorAttachment";
 
 export class RegisterOptions {
   public RegisterOptions(userId: string) {
@@ -14,7 +15,7 @@ export class RegisterOptions {
 
   attestation: Attestation = Attestation.NONE;
 
-  authenticatorType?: string;
+  authenticatorType?: AuthenticatorAttachment;
 
   discoverable: boolean = true;
 

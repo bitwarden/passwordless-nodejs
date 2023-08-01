@@ -1,7 +1,9 @@
 This library is meant for helping you integrate 'Passwordless.dev' with your Node.js backend.
 
 # Requirements
-- ES6 or newer, read more [here](https://node.green/).
+- ES2018 or newer, read more [here](https://node.green/).
+- Supported JavaScript modules: CommonJS, ES
+- Node.js 10 or newer
 
 # Getting Started
 ## .env
