@@ -132,8 +132,5 @@ dist
 package-lock.json
 .DS_Store
 .idea/
-/lib/
-
-passwordless-api.js
-passwordless-api.d.ts
-passwordless-api.js.map
+/dist/
+/package/

@@ -3,21 +3,32 @@ import dts from 'rollup-plugin-dts';
 
 const config = [
     {
-        input: 'lib/index.js',
+        input: 'src/index.ts',
         output: {
-            file: 'passwordless-api.js',
+            file: 'dist/cjs/passwordless-api.cjs',
             format: 'cjs',
-            sourcemap: true,
+            sourcemap: true
         },
         external: ['axios'],
         plugins: [typescript()]
-    }, {
-        input: 'lib/index.d.ts',
+    },
+    {
+        input: 'dist/cjs/index.d.ts',
         output: {
-            file: 'passwordless-api.d.ts',
-            format: 'es'
+            file: 'dist/types/passwordless-api.d.ts'
         },
+        external: ['axios'],
         plugins: [dts.default()]
+    },
+    {
+        input: 'src/index.ts',
+        output: {
+            file: 'dist/esm/passwordless-api.mjs',
+            format: 'es',
+            sourcemap: true
+        },
+        external: ['axios'],
+        plugins: [typescript()]
     }
 ];
 export default config;

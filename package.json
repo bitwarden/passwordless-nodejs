@@ -12,10 +12,10 @@
     "webauthn"
   ],
   "scripts": {
-    "_clear": "rimraf lib/*",
+    "_clear": "rimraf dist/*",
     "_tsc": "tsc -p tsconfig.json",
     "_make-bundle": "rollup --config --bundleConfigAsCjs",
-    "build": "run-s _clear _tsc _make-bundle",
+    "build": "run-s _clear _make-bundle",
     "test": "jest --coverage",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint --fix 'src/**/*.ts'"
@@ -46,12 +46,14 @@
     "typescript": "^5.1.6"
   },
   "files": [
-    "passwordless-api.d.ts",
-    "passwordless-api.js",
-    "passwordless-api.js.map"
+    "dist/types/passwordless-api.d.ts",
+    "dist/cjs/passwordless-api.cjs",
+    "dist/cjs/passwordless-api.cjs.map",
+    "dist/esm/passwordless-api.mjs",
+    "dist/esm/passwordless-api.mjs.map"
   ],
-  "main": "passwordless-api.js",
-  "types": "passwordless-api.d.ts",
+  "main": "dist/cjs/passwordless-api.js",
+  "types": "dist/types/passwordless-api.d.ts",
   "engines": {
     "node": ">=10.0"
   }
