@@ -1,6 +1,6 @@
 {
   "name": "@passwordlessdev/passwordless-nodejs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Passwordless Node.js library",
   "author": "Bitwarden",
   "contributors": [
@@ -53,7 +53,7 @@
     "dist/esm/passwordless-api.mjs",
     "dist/esm/passwordless-api.mjs.map"
   ],
-  "main": "dist/cjs/passwordless-api.js",
+  "main": "dist/cjs/passwordless-api.cjs",
   "types": "dist/types/passwordless-api.d.ts",
   "engines": {
     "node": ">=10.0"
