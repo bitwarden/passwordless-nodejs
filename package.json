@@ -1,6 +1,6 @@
 {
   "name": "@passwordlessdev/passwordless-nodejs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Passwordless Node.js library",
   "author": "Bitwarden",
   "contributors": [
