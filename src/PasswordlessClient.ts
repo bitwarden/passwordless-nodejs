@@ -12,6 +12,7 @@ import ListResponse from "./models/ListResponse";
 import Credential from "./models/Credential";
 import VerifiedUser from "./models/VerifiedUser";
 import VerifyTokenRequest from "./models/VerifyTokenRequest";
+import AddAliasRequest from "./models/AddAliasRequest";
 
 export class PasswordlessClient implements IPasswordlessClient {
   private readonly _httpClient!: AxiosInstance;
@@ -42,6 +43,9 @@ export class PasswordlessClient implements IPasswordlessClient {
       },
     );
   }
+
+  addAliases = async (request: AddAliasRequest): Promise<void> =>
+    this._httpClient.post("alias", request);
 
   createRegisterToken = async (
     registerOptions: RegisterOptions,
