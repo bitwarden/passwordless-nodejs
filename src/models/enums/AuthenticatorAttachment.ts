@@ -1,4 +1,6 @@
 export enum AuthenticatorAttachment {
+  ANY = "any",
+
   /**
    * A platform authenticator is attached using a client device-specific transport, called platform attachment, and is usually not removable from the client device.
    */

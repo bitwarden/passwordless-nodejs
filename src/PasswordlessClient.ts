@@ -12,8 +12,11 @@ import ListResponse from "./models/ListResponse";
 import Credential from "./models/Credential";
 import VerifiedUser from "./models/VerifiedUser";
 import VerifyTokenRequest from "./models/VerifyTokenRequest";
-import AddAliasRequest from "./models/AddAliasRequest";
+import SetAliasRequest from "./models/SetAliasRequest";
 
+/**
+ * Passwordless SDK client.
+ */
 export class PasswordlessClient implements IPasswordlessClient {
   private readonly _httpClient!: AxiosInstance;
 
@@ -44,9 +47,15 @@ export class PasswordlessClient implements IPasswordlessClient {
     );
   }
 
-  addAliases = async (request: AddAliasRequest): Promise<void> =>
+  /**
+   * @inheritDoc
+   */
+  setAliases = async (request: SetAliasRequest): Promise<void> =>
     this._httpClient.post("alias", request);
 
+  /**
+   * @inheritDoc
+   */
   createRegisterToken = async (
     registerOptions: RegisterOptions,
   ): Promise<RegisterTokenResponse> =>
@@ -54,6 +63,9 @@ export class PasswordlessClient implements IPasswordlessClient {
       .post("register/token", registerOptions)
       .then((response) => response.data);
 
+  /**
+   * @inheritDoc
+   */
   deleteCredential = (credentialId: Uint8Array): Promise<void> => {
     if (!credentialId) {
       throw new Error("'credentialId' is empty or was not specified.");
@@ -62,11 +74,17 @@ export class PasswordlessClient implements IPasswordlessClient {
     return this._httpClient.post("credentials/delete", request);
   };
 
+  /**
+   * @inheritDoc
+   */
   deleteUser = (userId: string): Promise<void> => {
     const request = new DeleteUserRequest(userId);
     return this._httpClient.post("users/delete", request);
   };
 
+  /**
+   * @inheritDoc
+   */
   listAliases = (userId: string): Promise<AliasPointer[]> =>
     this._httpClient
       .get<ListResponse<AliasPointer>>(`alias/list?userid=${userId}`)
@@ -75,6 +93,9 @@ export class PasswordlessClient implements IPasswordlessClient {
           response.data.values,
       );
 
+  /**
+   * @inheritDoc
+   */
   listCredentials = (userId: string): Promise<Credential[]> =>
     this._httpClient
       .get<ListResponse<Credential>>(`credentials/list?userid=${userId}`)
@@ -83,6 +104,9 @@ export class PasswordlessClient implements IPasswordlessClient {
           response.data.values,
       );
 
+  /**
+   * @inheritDoc
+   */
   verifyToken = (verifyToken: string): Promise<VerifiedUser | null> => {
     const request = new VerifyTokenRequest(verifyToken);
     return this._httpClient
