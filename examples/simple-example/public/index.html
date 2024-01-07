@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Passwordless Node</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<main class="container">
+    <h2>Bitwarden Passwordless.dev - Node.js</h2>
+    <p>To run this example you must first add yor API key in index.html and your API Secret in app.js</p>
+    <p><a href="https://docs.passwordless.dev/">Documentation</a> - <a href="https://admin.passwordless.dev/signup">Get
+        your API keys</a></p>
+
+    <strong>Username</strong>
+    <input type="text" id="username" placeholder="Username, Email etc"/>
+
+    <strong>Alias:</strong>
+    <input type="text" id="alias" placeholder="Username, Email etc"/>
+    <button id="passwordless-register">Register</button>
+    <button id="passwordless-signin">Login</button>
+    <pre id="status"></pre>
+
+</main>
+<script>
+    const API_KEY = "<YOUR_PUBLIC_API_KEY>"; // Replace this value with your API Key
+    const YOUR_BACKEND_URL = "http://localhost:5014"; // Where this node.js app is running. This is where your own backend lives.
+</script>
+<script src="debug.js"></script>
+<script src="https://cdn.passwordless.dev/dist/1.1.0/umd/passwordless.umd.min.js" crossorigin="anonymous"></script>
+<script src="client-register.js"></script>
+<script src="client-signin.js"></script>
+</body>
+</html>
