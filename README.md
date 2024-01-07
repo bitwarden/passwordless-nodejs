@@ -1,18 +1,21 @@
-This library is meant for helping you integrate 'Passwordless.dev' with your Node.js backend.
+Passwordless Python SDK
+The official Bitwarden Passwordless.dev Python library, for Python 3+.
 
 # Installation
 ```bash
 $ npm i @@passwordlessdev/passwordless-nodejs
 ```
 
-# Requirements
+# Dependencies & Requirements
 - ES2018 or newer, read more [here](https://node.green/).
 - Supported JavaScript modules: CommonJS, ES
 - Node.js 10 or newer
 
 # Getting Started
-## .env
-When using .env to configure your web application you'll need to set the following properties:
+Follow the [Get started guide](https://docs.passwordless.dev/guide/get-started.html).
+
+## Customization
+When using `.env` to configure your web application you'll need to set the following properties:
 
 | Key                   | Value example                                  | Description                                                  | Optional |
 |-----------------------|------------------------------------------------|--------------------------------------------------------------|----------|
@@ -21,7 +24,7 @@ When using .env to configure your web application you'll need to set the followi
 
 You would then use the PasswordlessClient as:
 
-# Using
+# Creating a `PasswordlessClient` instance
 Specifying the `baseUrl` would be optional, and will contain `https://v4.passwordless.dev` as its default value.
 
 ```TSX
@@ -93,3 +96,9 @@ signin = async (request: express.Request, response: express.Response) => {
         response.send(401);
     }
 ```
+
+## Examples
+See [Passwordless Python Example](https://github.com/bitwarden/passwordless-nodejs/blob/main/examples/simple-example) for Flash Web application.
+
+## Documentation
+For a comprehensive list of examples, check out the [API documentation](https://docs.passwordless.dev/guide/get-started.html).
