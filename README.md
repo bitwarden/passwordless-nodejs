@@ -24,7 +24,7 @@ When using `.env` to configure your web application you'll need to set the follo
 
 You would then use the PasswordlessClient as:
 
-# Creating a `PasswordlessClient` instance
+## Creating a `PasswordlessClient` instance
 Specifying the `baseUrl` would be optional, and will contain `https://v4.passwordless.dev` as its default value.
 
 ```TSX
