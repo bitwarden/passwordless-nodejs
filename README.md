@@ -98,7 +98,7 @@ signin = async (request: express.Request, response: express.Response) => {
 ```
 
 ## Examples
-See [Passwordless Python Example](https://github.com/bitwarden/passwordless-nodejs/blob/main/examples/simple-example) for Flash Web application.
+See [Passwordless NodeJS Example](https://github.com/bitwarden/passwordless-nodejs/blob/main/examples/simple-example) for NodeJS Web application.
 
 ## Documentation
 For a comprehensive list of examples, check out the [API documentation](https://docs.passwordless.dev/guide/get-started.html).
