@@ -13,6 +13,7 @@ import Credential from "./models/Credential";
 import VerifiedUser from "./models/VerifiedUser";
 import VerifyTokenRequest from "./models/VerifyTokenRequest";
 import SetAliasRequest from "./models/SetAliasRequest";
+import SendMagicLinkRequest from "./models/SendMagicLinkRequest";
 
 /**
  * Passwordless SDK client.
@@ -114,6 +115,12 @@ export class PasswordlessClient implements IPasswordlessClient {
       .then((response: AxiosResponse<VerifiedUser>) => response.data)
       .catch(() => null);
   };
+
+  /**
+   * @inheritDoc
+   */
+  sendMagicLink = (request: SendMagicLinkRequest): Promise<void> =>
+    this._httpClient.post("magic-link/send", request);
 }
 
 export default PasswordlessClient;

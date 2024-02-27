@@ -14,6 +14,7 @@ export { DeleteUserRequest } from "./models/DeleteUserRequest";
 export { ListResponse } from "./models/ListResponse";
 export { RegisterOptions } from "./models/RegisterOptions";
 export { RegisterTokenResponse } from "./models/RegisterTokenResponse";
+export { SendMagicLinkRequest } from "./models/SendMagicLinkRequest";
 export { VerifiedUser } from "./models/VerifiedUser";
 export { VerifyTokenRequest } from "./models/VerifyTokenRequest";
 export { IPasswordlessClient } from "./IPasswordlessClient";
