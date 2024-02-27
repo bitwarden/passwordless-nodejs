@@ -1,5 +1,3 @@
-import DeleteUserRequest from "./DeleteUserRequest";
-
 export class SendMagicLinkRequest {
   constructor(emailAddress: string, urlTemplate: string, userId: string) {
     this.emailAddress = emailAddress;
