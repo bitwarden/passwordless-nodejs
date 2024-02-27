@@ -4,6 +4,7 @@ import RegisterOptions from "./models/RegisterOptions";
 import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import VerifiedUser from "./models/VerifiedUser";
 import SetAliasRequest from "./models/SetAliasRequest";
+import SendMagicLinkRequest from "./models/SendMagicLinkRequest";
 
 /**
  * Passwordless SDK client interface.
@@ -52,6 +53,12 @@ export interface IPasswordlessClient {
    * @param userId
    */
   deleteUser(userId: string): Promise<void>;
+
+  /**
+   * Sends a magic link to the user's email.
+   * @param request magic link containing details about the magic link to send
+   */
+  sendMagicLink(request: SendMagicLinkRequest): Promise<void>;
 }
 
 export default IPasswordlessClient;
