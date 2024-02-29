@@ -5,6 +5,8 @@ import RegisterTokenResponse from "./models/RegisterTokenResponse";
 import VerifiedUser from "./models/VerifiedUser";
 import SetAliasRequest from "./models/SetAliasRequest";
 import SendMagicLinkRequest from "./models/SendMagicLinkRequest";
+import GenerateAuthenticationTokenRequest from "./models/GenerateAuthenticationTokenRequest";
+import GeneratedAuthenticationTokenResponse from "./models/GeneratedAuthenticationTokenResponse";
 
 /**
  * Passwordless SDK client interface.
@@ -59,6 +61,14 @@ export interface IPasswordlessClient {
    * @param request magic link containing details about the magic link to send
    */
   sendMagicLink(request: SendMagicLinkRequest): Promise<void>;
+
+  /**
+   * Can be used to generate a token for a user to authenticate with.
+   * @param request details about the user to generate a token for
+   */
+  generateAuthenticationToken(
+    request: GenerateAuthenticationTokenRequest,
+  ): Promise<GeneratedAuthenticationTokenResponse | null>;
 }
 
 export default IPasswordlessClient;
