@@ -11,6 +11,8 @@ export { CredentialDescriptor } from "./models/CredentialDescriptor";
 export { Credential } from "./models/Credential";
 export { DeleteCredentialRequest } from "./models/DeleteCredentialRequest";
 export { DeleteUserRequest } from "./models/DeleteUserRequest";
+export { GenerateAuthenticationTokenRequest } from "./models/GenerateAuthenticationTokenRequest";
+export { GeneratedAuthenticationTokenResponse } from "./models/GeneratedAuthenticationTokenResponse";
 export { ListResponse } from "./models/ListResponse";
 export { RegisterOptions } from "./models/RegisterOptions";
 export { RegisterTokenResponse } from "./models/RegisterTokenResponse";

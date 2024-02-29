@@ -14,6 +14,8 @@ import VerifiedUser from "./models/VerifiedUser";
 import VerifyTokenRequest from "./models/VerifyTokenRequest";
 import SetAliasRequest from "./models/SetAliasRequest";
 import SendMagicLinkRequest from "./models/SendMagicLinkRequest";
+import GenerateAuthenticationTokenRequest from "./models/GenerateAuthenticationTokenRequest";
+import GeneratedAuthenticationTokenResponse from "./models/GeneratedAuthenticationTokenResponse";
 
 /**
  * Passwordless SDK client.
@@ -121,6 +123,20 @@ export class PasswordlessClient implements IPasswordlessClient {
    */
   sendMagicLink = (request: SendMagicLinkRequest): Promise<void> =>
     this._httpClient.post("magic-link/send", request);
+
+  /**
+   * @inheritDoc
+   */
+  generateAuthenticationToken = (
+    request: GenerateAuthenticationTokenRequest,
+  ): Promise<GeneratedAuthenticationTokenResponse | null> =>
+    this._httpClient
+      .post("signin/generate-token", request)
+      .then(
+        (response: AxiosResponse<GeneratedAuthenticationTokenResponse>) =>
+          response.data,
+      )
+      .catch(() => null);
 }
 
 export default PasswordlessClient;
