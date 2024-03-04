@@ -9,7 +9,7 @@ export class ApiException extends Error {
   }
 
   public get details(): ProblemDetails {
-    return this.details;
+    return this._details;
   }
 }
 
