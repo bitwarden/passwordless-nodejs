@@ -122,7 +122,7 @@ export class PasswordlessClient implements IPasswordlessClient {
    * @inheritDoc
    */
   sendMagicLink = (request: SendMagicLinkRequest): Promise<void> =>
-    this._httpClient.post("magic-link/send", request);
+    this._httpClient.post("magic-links/send", request);
 
   /**
    * @inheritDoc
