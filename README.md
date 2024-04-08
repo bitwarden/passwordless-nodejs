@@ -1,20 +1,24 @@
-Passwordless Node.js SDK
+# Passwordless Node.js SDK
+![Build](https://github.com/bitwarden/passwordless-nodejs/actions/workflows/ci.yml/badge.svg)
+[![Maven Central](https://img.shields.io/npm/v/@passwordlessdev/passwordless-nodejs.svg)](https://www.npmjs.com/package/@passwordlessdev/passwordless-nodejs)
+[![Downloads](https://img.shields.io/npm/dm/@passwordlessdev/passwordless-nodejs.svg)]([https://pypi.org/project/passwordless/](https://www.npmjs.com/package/@passwordlessdev/passwordless-nodejs))
+
 The official Bitwarden Passwordless.dev Node.js library.
 
-# Installation
+## Installation
 ```bash
 $ npm i @@passwordlessdev/passwordless-nodejs
 ```
 
-# Dependencies & Requirements
+## Dependencies & Requirements
 - ES2018 or newer, read more [here](https://node.green/).
 - Supported JavaScript modules: CommonJS, ES
 - Node.js 10 or newer
 
-# Getting Started
+## Getting Started
 Follow the [Get started guide](https://docs.passwordless.dev/guide/get-started.html).
 
-## Customization
+### Customization
 When using `.env` to configure your web application you'll need to set the following properties:
 
 | Key                   | Value example                                  | Description                                                  | Optional |
@@ -24,7 +28,7 @@ When using `.env` to configure your web application you'll need to set the follo
 
 You would then use the PasswordlessClient as:
 
-## Creating a `PasswordlessClient` instance
+### Creating a `PasswordlessClient` instance
 Specifying the `baseUrl` would be optional, and will contain `https://v4.passwordless.dev` as its default value.
 
 ```TSX
@@ -39,7 +43,7 @@ const options: PasswordlessOptions = {};
 this._passwordlessClient = new PasswordlessClient('demo:secret:f831e39c29e64b77aba547478a4b3ec6', options);
 ```
 
-## Registration
+### Registration
 If you had for example a 'UserController.ts' with a 'signup' arrow function. You could register a new token as shown below.
 
 You'll first want to proceed to store the new user in your database and verifying it has succeeded, before registering the token.
@@ -77,7 +81,7 @@ signup = async (request: express.Request, response: express.Response) => {
     }
 ```
 
-## Logging in
+### Logging in
 
 ```TSX
 signin = async (request: express.Request, response: express.Response) => {
@@ -97,7 +101,7 @@ signin = async (request: express.Request, response: express.Response) => {
     }
 ```
 
-## Examples
+### Examples
 See [Passwordless Node.js Example](https://github.com/bitwarden/passwordless-nodejs/blob/main/examples/simple-example) for a Node.js Web application.
 
 ## Documentation
