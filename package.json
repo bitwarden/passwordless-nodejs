@@ -43,7 +43,7 @@
     "npm-run-all2": "5.0.0",
     "rollup": "3.29.4",
     "rollup-plugin-dts": "6.1.0",
-    "ts-jest": "29.1.1",
+    "ts-jest": "29.1.5",
     "typescript": "5.4.5"
   },
   "files": [
