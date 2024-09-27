@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
           node-version: 18
-          registry-url: https://npm.pkg.github.com/
+          registry-url: 'https://npm.pkg.github.com/'
       - run: npm ci
       - run: npm publish
         env:
