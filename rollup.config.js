@@ -10,15 +10,16 @@ const config = [
             sourcemap: true
         },
         external: ['axios'],
-        plugins: [typescript()]
+        plugins: [typescript()]  // No need to pass outDir, it will use tsconfig.json
     },
     {
-        input: 'dist/cjs/index.d.ts',
+        input: 'src/index.ts',  // Use source files for declaration generation
         output: {
-            file: 'dist/types/passwordless-api.d.ts'
+            file: 'dist/types/passwordless-api.d.ts',
+            format: 'es'
         },
         external: ['axios'],
-        plugins: [dts.default()]
+        plugins: [dts.default()]  // Generate declaration files
     },
     {
         input: 'src/index.ts',
@@ -28,7 +29,8 @@ const config = [
             sourcemap: true
         },
         external: ['axios'],
-        plugins: [typescript()]
+        plugins: [typescript()]  // No need to pass outDir
     }
 ];
+
 export default config;

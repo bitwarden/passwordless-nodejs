@@ -4,13 +4,11 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "ES2018",
-    "outDir": "dist",
-    "declaration": true,
     "strict": true,
     "module": "esnext",
     "noEmitOnError": true,
-    "lib": ["ES2017"],
-    "esModuleInterop": false,
+    "lib": ["ES2018"],
+    "esModuleInterop": true,
   },
   "include": ["src"]
 }
