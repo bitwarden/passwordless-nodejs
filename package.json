@@ -1,5 +1,5 @@
 {
-  "name": "jonas-passwordless-nodejs",
+  "name": "@jonashendrickx/passwordless-nodejs",
   "version": "1.0.0",
   "description": "Passwordless Node.js library",
   "author": "Bitwarden",
