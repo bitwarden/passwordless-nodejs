@@ -35,6 +35,6 @@ jobs:
         run: npm ci
       - name: Set up Node.js registry
         run: |
-          npm set "//registry.npmjs.org/:_authToken=${{NODE_AUTH_TOKEN}}"
+          npm set "//registry.npmjs.org/:_authToken=${{env.NODE_AUTH_TOKEN}}"
       - name: Publish to npm
         run: npm publish --access public
