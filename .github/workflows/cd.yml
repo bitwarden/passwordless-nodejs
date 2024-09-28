@@ -35,7 +35,7 @@ jobs:
         run: |
           npm set "//npm.pkg.github.com/:_authToken=NODE_AUTH_TOKEN"
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -56,6 +56,6 @@ jobs:
         run: |
           npm set "//registry.npmjs.org/:_authToken=NODE_AUTH_TOKEN"
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
