@@ -18,6 +18,27 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
+        with:
+          node-version: 'latest'
+      - name: Install dependencies
+        run: npm ci
+      - name: Set up Node.js registry
+        run: |
+          npm set "//npm.pkg.github.com/:_authToken=NODE_AUTH_TOKEN"
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish-npm:
     needs: build
     runs-on: ubuntu-24.04
