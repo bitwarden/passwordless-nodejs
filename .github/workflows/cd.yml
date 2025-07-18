@@ -10,6 +10,7 @@ on:
 
 jobs:
   format:
+    name: Format
     runs-on: ubuntu-24.04
 
     permissions:
@@ -31,6 +32,7 @@ jobs:
         run: npm run lint
 
   deploy:
+    name: Deploy
     if: ${{ github.event_name == 'release' }}
     needs: format
     runs-on: ubuntu-24.04
@@ -38,6 +40,7 @@ jobs:
     permissions:
       actions: write
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout
@@ -62,9 +65,26 @@ jobs:
             dist
             package.json
 
+      - name: Log in to Azure
+        uses: bitwarden/gh-actions/azure-login@main
+        with:
+          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+
+      - name: Get Azure Key Vault secrets
+        id: get-kv-secrets
+        uses: bitwarden/gh-actions/get-keyvault-secrets@main
+        with:
+          keyvault: gh-passwordless-nodejs
+          secrets: "DEPLOYMENT-GITHUB-TOKEN"
+
+      - name: Log out from Azure
+        uses: bitwarden/gh-actions/azure-logout@main
+
       - name: Dispatch deployment
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.get-kv-secrets.outputs.DEPLOYMENT-GITHUB-TOKEN }}
         run: >
           gh workflow run deploy-passwordless-nodejs
           --repo bitwarden/passwordless-devops
