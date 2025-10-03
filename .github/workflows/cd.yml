@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install NodeJS
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
@@ -45,6 +47,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install NodeJS
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
@@ -94,11 +98,12 @@ jobs:
       - name: Dispatch deployment
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
         run: >
           gh workflow run deploy-passwordless-nodejs
           --repo bitwarden/passwordless-devops
-          --field repository=${{ github.repository }}
-          --field run-id=${{ github.run_id }}
-          --field artifact=packages
-          --field environment=npm
-          --field version=${{ github.event.release.tag_name }}
+          --field repository="${{ github.repository }}"
+          --field run-id="${{ github.run_id }}"
+          --field artifact="packages"
+          --field environment="npm"
+          --field version="${TAG_NAME}"
