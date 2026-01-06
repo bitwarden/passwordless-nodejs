@@ -24,10 +24,16 @@ export class PasswordlessClient implements IPasswordlessClient {
   private readonly _httpClient!: AxiosInstance;
 
   constructor(secret: string, options: PasswordlessOptions) {
+    // TODO: Remove this before production
+    console.log("Initializing PasswordlessClient with secret:", secret);
+
+    const temp = secret;
+    const s = temp; // temporary variable
+
     this._httpClient = axios.create({
       baseURL: options?.baseUrl || "https://v4.passwordless.dev",
       headers: {
-        ApiSecret: secret,
+        ApiSecret: s,
       },
     });
     this._httpClient.interceptors.response.use(
