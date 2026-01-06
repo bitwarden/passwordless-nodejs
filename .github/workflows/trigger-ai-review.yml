@@ -1,0 +1,88 @@
+name: Trigger AI Review
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  actions: read
+  contents: write
+  id-token: write
+  pull-requests: read
+
+jobs:
+  trigger-review:
+    name: Trigger Claude Code Review
+    if: |
+      github.event.label.name == 'ai-review' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    env:
+      _BOT_EMAIL: 106330231+bitwarden-devops-bot@users.noreply.github.com
+      _BOT_NAME: bitwarden-devops-bot
+    steps:
+      - name: Log in to Azure
+        uses: bitwarden/gh-actions/azure-login@main
+        with:
+          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+
+      - name: Get Azure Key Vault secrets
+        id: get-kv-secrets
+        uses: bitwarden/gh-actions/get-keyvault-secrets@main
+        with:
+          keyvault: gh-org-bitwarden
+          secrets: "BW-GHAPP-ID,BW-GHAPP-KEY"
+
+      - name: Log out from Azure
+        uses: bitwarden/gh-actions/azure-logout@main
+
+      - name: Generate GH App token
+        uses: actions/create-github-app-token@a8d616148505b5069dccd32f177bb87d7f39123b # v2.1.1
+        id: app-token
+        with:
+          app-id: ${{ steps.get-kv-secrets.outputs.BW-GHAPP-ID }}
+          private-key: ${{ steps.get-kv-secrets.outputs.BW-GHAPP-KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - name: Checkout PR branch
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure Git & push empty commit to trigger Claude Code review
+        env:
+          _PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          _GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -e
+
+          # Setup trap to ensure credentials are always cleaned up
+          cleanup() {
+            git config --local --unset-all http.https://github.com/.extraheader || true
+          }
+          trap cleanup EXIT
+
+          # Configure git user
+          git config --local user.email "${_BOT_EMAIL}"
+          git config --local user.name "${_BOT_NAME}"
+
+          # Configure git credentials for push (needed because persist-credentials: false)
+          # Use the same format as actions/checkout: Basic auth with base64-encoded x-access-token
+          BASIC_CREDENTIAL=$(echo -n "x-access-token:${_GH_TOKEN}" | base64)
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
+
+          # Create and push empty commit
+          git commit --allow-empty -m "Claude Code review requested" || {
+            echo "::error::Failed to create empty commit"
+            exit 1
+          }
+          git push origin "${_PR_BRANCH}" || {
+            echo "::error::Failed to push commit to ${_PR_BRANCH}"
+            exit 1
+          }
