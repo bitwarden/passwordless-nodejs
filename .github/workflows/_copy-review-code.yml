@@ -29,7 +29,7 @@ jobs:
   validation:
     name: Validation
     needs: check-permission
-    if: needs.check-permission.outputs.should_proceed == 'true'
+    if: needs.check-permission.outputs.should_proceed == 'true' || github.actor == 'bw-ghapp[bot]'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -68,7 +68,7 @@ jobs:
     name: Review
     runs-on: ubuntu-24.04
     needs: [check-permission, validation]
-    if: needs.check-permission.outputs.should_proceed == 'true' && needs.validation.outputs.should_review == 'true'
+    if: (needs.check-permission.outputs.should_proceed == 'true' || github.actor == 'bw-ghapp[bot]') && needs.validation.outputs.should_review == 'true'
     timeout-minutes: 15
     permissions:
       actions: read
