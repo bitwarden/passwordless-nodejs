@@ -18,8 +18,8 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     env:
-      _BOT_EMAIL: 106330231+bitwarden-devops-bot@users.noreply.github.com
-      _BOT_NAME: bitwarden-devops-bot
+      _USER_EMAIL: ${{ github.event.sender.id }}+${{ github.event.sender.login }}@users.noreply.github.com
+      _USER_NAME: ${{ github.event.sender.login }}
     steps:
       - name: Log in to Azure
         uses: bitwarden/gh-actions/azure-login@main
@@ -68,9 +68,9 @@ jobs:
           }
           trap cleanup EXIT
 
-          # Configure git user
-          git config --local user.email "${_BOT_EMAIL}"
-          git config --local user.name "${_BOT_NAME}"
+          # Configure git user (use the person who added the label)
+          git config --local user.email "${_USER_EMAIL}"
+          git config --local user.name "${_USER_NAME}"
 
           # Configure git credentials for push (needed because persist-credentials: false)
           # Use the same format as actions/checkout: Basic auth with base64-encoded x-access-token
