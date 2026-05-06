@@ -45,7 +45,7 @@ app.post('/users/register', async (req, res) => {
     registerOptions.discoverable = true;
 
     const passwordlessOptions: PasswordlessOptions = {
-        baseUrl: process.env.PASSWORDLESS_API as string
+        baseUrl: process.env.PASSWORDLESS_API_URL as string
     }
     const passwordlessClient = new PasswordlessClient(
         process.env.PASSWORDLESS_SECRET as string,

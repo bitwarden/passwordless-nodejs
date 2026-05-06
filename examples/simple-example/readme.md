@@ -3,11 +3,14 @@
 Please read the documentation here: https://docs.passwordless.dev
 
 1. Get your own API keys here: https://admin.passwordless.dev/signup
-2. Replace the following:
+2. Create a `.env` file in the root of this project and add the following variables:
+   - `PASSWORDLESS_SECRET=<YOUR_API_SECRET>`: Your API secret from the administration console.
+   - (optional) - Uncomment `PASSWORDLESS_API_URL` if you are self-hosting Passwordless.
+3. Replace the following:
    - `index.html > YOUR_BACKEND_URL`: This is where your own backend lives (this node.js example)
    - `index.html > API_KEY`: Your public API key obtained from the administration console.
-   - `.env > PASSWORDLESS_SECRET`: Your API secret.
-3. run `npm install` and start app with `npm run dev`.
+   - (optional) `index.html > PASSWORDLESS_API_URL`: The URL of your Passwordless instance if self-hosting.
+4. run `npm install` and start app with `npm run dev`.
 
 **Try online:** You can test this demo live at https://demo-backend.passwordless.dev/.
 
