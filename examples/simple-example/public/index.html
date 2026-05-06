@@ -32,9 +32,10 @@
 <script>
     const API_KEY = "<YOUR_PUBLIC_API_KEY>"; // Replace this value with your API Key
     const YOUR_BACKEND_URL = "http://localhost:5014"; // Where this node.js app is running. This is where your own backend lives.
+    const PASSWORDLESS_API_URL = "https://v4.passwordless.dev";  // optional parameter, defaults to 'https://v4.passwordless.dev' if not set. Only set this for self-hosting.
 </script>
 <script src="debug.js"></script>
-<script src="https://cdn.passwordless.dev/dist/1.1.0/umd/passwordless.umd.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.passwordless.dev/dist/1.2.4/umd/passwordless.umd.min.js" crossorigin="anonymous"></script>
 <script src="client-register.js"></script>
 <script src="client-signin.js"></script>
 </body>
