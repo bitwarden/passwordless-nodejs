@@ -10,7 +10,8 @@ Please read the documentation here: https://docs.passwordless.dev
    - `index.html > YOUR_BACKEND_URL`: This is where your own backend lives (this node.js example)
    - `index.html > API_KEY`: Your public API key obtained from the administration console.
    - (optional) `index.html > PASSWORDLESS_API_URL`: The URL of your Passwordless instance if self-hosting.
-4. run `npm install` and start app with `npm run dev`.
+4. run `npm install` and `npm run build` in the repository root to build the passwordles-nodejs SDK.
+5. run `npm install` and start app with `npm run dev` in the sample app directory to spin up the sample to test with.
 
 **Try online:** You can test this demo live at https://demo-backend.passwordless.dev/.
 

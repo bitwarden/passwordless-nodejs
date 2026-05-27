@@ -60,7 +60,7 @@ app.post('/users/login', async (req, res) => {
 
     // before we do anything, verify the token.
     const passwordlessOptions: PasswordlessOptions = {
-        baseUrl: process.env.PASSWORDLESS_API as string
+        baseUrl: process.env.PASSWORDLESS_API_URL as string
     };
     const passwordlessClient = new PasswordlessClient(
         process.env.PASSWORDLESS_SECRET as string,
