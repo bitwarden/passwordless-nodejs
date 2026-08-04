@@ -33,9 +33,7 @@ jobs:
         run: npm run lint
 
   # Attach the CI-built npm bundle to the release so bitwarden/deploy's
-  # publish-passwordless-nodejs.yml can promote it later. This workflow does NOT publish to
-  # npm — that step is manually gated in bitwarden/deploy and runs from the public
-  # publish.yml shim under this repo.
+  # publish-passwordless-nodejs.yml can promote it later.
   attach-build:
     name: Attach npm build to release
     needs: format
@@ -58,9 +56,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Fail fast if the release tag doesn't line up with package.json — the downstream
-      # publish trusts package.json, so a mismatch here would publish a different version
-      # than the release advertises.
       - name: Verify package.json version matches release tag
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
