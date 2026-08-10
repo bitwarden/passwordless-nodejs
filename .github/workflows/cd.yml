@@ -1,12 +1,11 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: Node.js Package
 
 on:
   release:
     types:
       - published
+
+permissions: {}
 
 jobs:
   format:
@@ -33,16 +32,15 @@ jobs:
       - name: Run format
         run: npm run lint
 
-  deploy:
-    name: Deploy
-    if: ${{ github.event_name == 'release' }}
+  # Attach the CI-built npm bundle to the release so bitwarden/deploy's
+  # publish-passwordless-nodejs.yml can promote it later.
+  attach-build:
+    name: Attach npm build to release
     needs: format
     runs-on: ubuntu-24.04
 
     permissions:
-      actions: write
-      contents: read
-      id-token: write
+      contents: write
 
     steps:
       - name: Checkout
@@ -58,52 +56,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify package.json version matches release tag
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          PKG_VERSION=$(jq -r '.version' package.json)
+          if [[ "$PKG_VERSION" != "$RELEASE_TAG" ]]; then
+            echo "::error::package.json version '${PKG_VERSION}' does not match release tag '${RELEASE_TAG}'"
+            exit 1
+          fi
+
       - name: Run build
         run: npm run build
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: packages
-          path: |
-            dist
-            package.json
-
-      - name: Log in to Azure
-        uses: bitwarden/gh-actions/azure-login@main
-        with:
-          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-          client_id: ${{ secrets.AZURE_CLIENT_ID }}
-
-      - name: Get Azure Key Vault secrets
-        id: get-kv-secrets
-        uses: bitwarden/gh-actions/get-keyvault-secrets@main
-        with:
-          keyvault: gh-org-bitwarden
-          secrets: 'BW-GHAPP-ID,BW-GHAPP-KEY'
-
-      - name: Log out from Azure
-        uses: bitwarden/gh-actions/azure-logout@main
-
-      - name: Generate GH App token
-        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
-        id: app-token
-        with:
-          app-id: ${{ steps.get-kv-secrets.outputs.BW-GHAPP-ID }}
-          private-key: ${{ steps.get-kv-secrets.outputs.BW-GHAPP-KEY }}
-          owner: bitwarden
-          repositories: passwordless-devops
-
-      - name: Dispatch deployment
+      - name: Zip build
         env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          TAG_NAME: ${{ github.event.release.tag_name }}
-        run: >
-          gh workflow run deploy-passwordless-nodejs
-          --repo bitwarden/passwordless-devops
-          --field repository="${{ github.repository }}"
-          --field run-id="${{ github.run_id }}"
-          --field artifact="packages"
-          --field environment="npm"
-          --field version="${TAG_NAME}"
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          zip -r "passwordless-nodejs-${RELEASE_TAG}-npm-build.zip" dist
+
+      - name: Upload zip as release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          gh release upload "${RELEASE_TAG}" \
+            "passwordless-nodejs-${RELEASE_TAG}-npm-build.zip" \
+            --clobber
