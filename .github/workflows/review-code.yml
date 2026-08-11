@@ -10,7 +10,7 @@ permissions: {}
 jobs:
   review:
     name: Review
-    uses: bitwarden/gh-actions/.github/workflows/_review-code.yml@main
+    uses: ./.github/workflows/_copy-review-code.yml
     secrets:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
