@@ -2,6 +2,14 @@
   "name": "@passwordlessdev/passwordless-nodejs",
   "version": "1.0.2",
   "description": "Passwordless Node.js library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitwarden/passwordless-nodejs.git"
+  },
+  "homepage": "https://github.com/bitwarden/passwordless-nodejs#readme",
+  "bugs": {
+    "url": "https://github.com/bitwarden/passwordless-nodejs/issues"
+  },
   "author": "Bitwarden",
   "contributors": [
     "Jonas Hendrickx"
