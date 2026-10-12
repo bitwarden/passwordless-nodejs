@@ -1,3 +1,5 @@
+# This workflow triggers deployment to npm via bitwarden/deploy
+
 name: Node.js Package
 
 on:
@@ -8,26 +10,43 @@ on:
 
 permissions: {}
 
-concurrency:
-  group: cd-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  build:
-    name: Build npm bundle
+  format:
+    name: Format
     runs-on: ubuntu-24.04
-
     permissions:
       contents: read
-
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
 
       - name: Install NodeJS
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run format
+        run: npm run lint
+
+  build:
+    name: Build
+    needs: format
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install NodeJS
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 20
           cache: npm
@@ -51,7 +70,35 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: passwordless-nodejs-${{ steps.version.outputs.package_version }}-npm-build
-          path: "*dist/**"
-          if-no-files-found: error
+          name: packages
+          path: |
+            dist
+            package.json
 
+  trigger-deploy:
+    name: Trigger deployment
+    if: ${{ github.event_name == 'release' }}
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Log in to Azure
+        uses: bitwarden/gh-actions/azure-login@main
+        with:
+          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          client_id: ${{ secrets.AZURE_CLIENT_ID }}
+
+      - name: Trigger deployment to deploy repo
+        uses: bitwarden/gh-actions/trigger-actions@main
+        with:
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          task: deploy-passwordless-nodejs
+          data: |
+            {
+              "tag": "${{ github.event.release.tag_name }}"
+            }
