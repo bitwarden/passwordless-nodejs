@@ -1,0 +1,17 @@
+# Inert publish shim for @passwordlessdev/passwordless-nodejs.
+# Do NOT add logic to this file — it is intentionally minimal and managed by BRE.
+
+name: "Passwordless Node.js: Publish"
+on:
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  publish:
+    name: Publish @passwordlessdev/passwordless-nodejs to npm
+    permissions:
+      contents: read
+      id-token: write
+    uses: bitwarden/gh-actions/.github/workflows/_publish-passwordless-nodejs-npm.yml@main
+

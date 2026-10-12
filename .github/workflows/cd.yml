@@ -3,9 +3,10 @@
 name: Node.js Package
 
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 permissions: {}
 
@@ -48,14 +49,25 @@ jobs:
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Get package version
+        id: version
+        run: |
+          PKG_VERSION=$(jq -r '.version' package.json)
+          if [[ -z "$PKG_VERSION" || "$PKG_VERSION" == "null" ]]; then
+            echo "::error::Could not read .version from package.json"
+            exit 1
+          fi
+          echo "package_version=$PKG_VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Run build
         run: npm run build
 
-      - name: Upload artifacts
+      - name: Upload build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: packages

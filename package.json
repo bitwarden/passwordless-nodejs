@@ -1,7 +1,15 @@
 {
   "name": "@passwordlessdev/passwordless-nodejs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Passwordless Node.js library",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitwarden/passwordless-nodejs.git"
+  },
+  "homepage": "https://github.com/bitwarden/passwordless-nodejs#readme",
+  "bugs": {
+    "url": "https://github.com/bitwarden/passwordless-nodejs/issues"
+  },
   "author": "Bitwarden",
   "contributors": [
     "Jonas Hendrickx"
@@ -23,7 +31,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "1.16.0"
+    "axios": "1.18.0"
   },
   "devDependencies": {
     "@babel/core": "7.29.6",
